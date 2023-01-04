@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const User = require("../Modal/User");
+const Post = require("../Modal/Post");
 const bcrypt = require("bcrypt");
 
 // Start update
@@ -34,7 +35,9 @@ router.put("/:id", async (req, res) => {
 router.delete("/:id", async (req, res) => {
     if (req.body.userId === req.params.id) {
         try {
+            const user = await User.findById(req.params.id);
             try {
+                await Post.deleteMany({ username: user.username });
                 await User.findByIdAndDelete(req.params.id);
                 res.status(200).json("Delete this user");
             } catch (err) {
@@ -48,5 +51,13 @@ router.delete("/:id", async (req, res) => {
     }
 });
 // End User Delete
+
+// Start Get A User
+router.get("/:id", async (req, res) => {
+    const user = await User.findById(req.params.id);
+    const { password, ...others } = user._doc;
+    res.status(200).json(others);
+});
+// End Get A User
 
 module.exports = router;
