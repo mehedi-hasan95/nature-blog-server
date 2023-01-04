@@ -3,6 +3,7 @@ const app = express();
 const mongoose = require("mongoose");
 mongoose.set("strictQuery", true);
 const authRoute = require("./Routes/Auth");
+const userRoute = require("./Routes/User");
 
 require("dotenv").config();
 const port = process.env.PORT || 5000;
@@ -16,6 +17,7 @@ mongoose
     .catch((err) => console.log(err));
 
 app.use("/api/auth", authRoute);
+app.use("/api/user", userRoute);
 
 app.get("/", (req, res) => {
     res.send("Nature Blog Server");
