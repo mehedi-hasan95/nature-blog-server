@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
+const multer = require("multer");
 mongoose.set("strictQuery", true);
 const authRoute = require("./Routes/Auth");
 const userRoute = require("./Routes/User");
@@ -23,6 +24,23 @@ app.use("/api/user", userRoute);
 app.use("/api/post", postRoute);
 app.use("/api/category", catRoute);
 
+// Image Upload
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, "images");
+    },
+    filename: function (req, file, cb) {
+        cb(null, req.body.name);
+    },
+});
+
+const upload = multer({ storage: storage });
+
+app.post("/api/image", upload.single("img"), function (req, res, next) {
+    res.status(200).json("Image have been uploaded");
+});
+
+// Run Node
 app.get("/", (req, res) => {
     res.send("Nature Blog Server");
 });
