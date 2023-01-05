@@ -5,6 +5,7 @@ mongoose.set("strictQuery", true);
 const authRoute = require("./Routes/Auth");
 const userRoute = require("./Routes/User");
 const postRoute = require("./Routes/Post");
+const catRoute = require("./Routes/Category");
 
 require("dotenv").config();
 const port = process.env.PORT || 5000;
@@ -20,6 +21,7 @@ mongoose
 app.use("/api/auth", authRoute);
 app.use("/api/user", userRoute);
 app.use("/api/post", postRoute);
+app.use("/api/category", catRoute);
 
 app.get("/", (req, res) => {
     res.send("Nature Blog Server");

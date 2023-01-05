@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const userCategory = new mongoose.Schema(
     {
-        name: {
+        categories: {
             type: Array,
             required: true,
         },
