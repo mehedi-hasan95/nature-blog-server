@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const multer = require("multer");
+const cors = require("cors");
 mongoose.set("strictQuery", true);
 const authRoute = require("./Routes/Auth");
 const userRoute = require("./Routes/User");
@@ -13,6 +14,7 @@ const port = process.env.PORT || 5000;
 
 // Middleware
 app.use(express.json());
+app.use(cors());
 
 mongoose
     .connect(process.env.MONGO_URL)
