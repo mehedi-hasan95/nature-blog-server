@@ -74,9 +74,10 @@ router.get("/", async (req, res) => {
     const username = req.query.user;
     const catName = req.query.cat;
     try {
+        const userRegex = new RegExp(username, "i");
         let posts;
         if (username) {
-            posts = await Post.find({ username });
+            posts = await Post.find({ username: userRegex });
         } else if (catName) {
             posts = await Post.find({ categories: { $in: [catName] } });
         } else {
