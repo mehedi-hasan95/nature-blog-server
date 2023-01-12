@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const multer = require("multer");
+const path = require("path");
 const cors = require("cors");
 mongoose.set("strictQuery", true);
 const authRoute = require("./Routes/Auth");
@@ -15,6 +16,7 @@ const port = process.env.PORT || 5000;
 // Middleware
 app.use(express.json());
 app.use(cors());
+app.use("/images", express.static(path.join(__dirname, "/images")));
 
 mongoose
     .connect(process.env.MONGO_URL)
@@ -38,7 +40,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-app.post("/api/image", upload.single("img"), function (req, res, next) {
+app.post("/api/image", upload.single("file"), function (req, res, next) {
     res.status(200).json("Image have been uploaded");
 });
 

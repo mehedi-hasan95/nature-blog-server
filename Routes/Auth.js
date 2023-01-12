@@ -17,7 +17,7 @@ router.post("/register", async (req, res) => {
         const user = await newUser.save();
         res.status(200).json(user);
     } catch (err) {
-        res.status(500).json(err);
+        res.status(302).json(err);
     }
 });
 
@@ -28,7 +28,7 @@ router.post("/login", async (req, res) => {
     try {
         const loginUser = await User.findOne({ username: req.body.username });
         if (!loginUser) {
-            res.status(400).json("Wrong Username");
+            res.status(302).json({ message: "Wrong Username" });
             return;
         }
 
@@ -37,12 +37,12 @@ router.post("/login", async (req, res) => {
             loginUser.password
         );
         if (!loginPass) {
-            res.status(400).json("Wrong Password");
+            res.status(302).json({ message: "Wrong Password" });
             return;
         }
 
         if (!loginUser && !loginPass) {
-            res.status(400).json("Username is wrong");
+            res.status(406).json({ message: "Username is wrong" });
             return;
         }
 
