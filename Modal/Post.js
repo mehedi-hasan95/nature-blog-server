@@ -11,7 +11,15 @@ const userPost = new mongoose.Schema(
             required: true,
             unique: true,
         },
+        headding: {
+            type: String,
+            required: true,
+        },
         desc: {
+            type: String,
+            required: true,
+        },
+        message: {
             type: String,
             required: true,
         },

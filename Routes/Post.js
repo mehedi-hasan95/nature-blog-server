@@ -90,4 +90,22 @@ router.get("/", async (req, res) => {
 });
 // End Get All Post
 
+router.get("/:username/posts", async (req, res) => {
+    const username = req.params.username;
+    try {
+        const userRegex = new RegExp(username, "i");
+        let posts;
+        if (username) {
+            posts = await Post.find({ username: userRegex });
+        } else if (catName) {
+            posts = await Post.find({ categories: { $in: [catName] } });
+        } else {
+            posts = await Post.find();
+        }
+        res.status(200).json(posts);
+    } catch (error) {
+        res.status(500).json(error);
+    }
+});
+
 module.exports = router;
